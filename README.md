@@ -351,6 +351,7 @@ Ao produto ser adicionado a um pedido, deve-se informar a quantidade de produtos
     (60665981000207 ,280);
 
 ### 9. TABELAS E PRINCIPAIS CONSULTAS
+   #### 9.1 CONSULTAS DAS TABELAS COM TODOS OS DADOS INSERIDOS (Todas)
 
     Select * from cliente;
 
@@ -440,3 +441,13 @@ Ao produto ser adicionado a um pedido, deve-se informar a quantidade de produtos
 
 
 ![Image](https://user-images.githubusercontent.com/116188500/198855042-a97864a7-ca18-4cd8-8795-1ea0d400dc73.png)
+
+   #### 9.2 CONSULTAS DAS TABELAS COM FILTROS WHERE
+   #### 9.3 CONSULTAS QUE USAM OPERADORES LÓGICOS, ARITMÉTICOS E TABELAS OU CAMPOS RENOMEADOS (Mínimo 11)
+   #### 9.4 CONSULTAS QUE USAM OPERADORES LIKE E DATAS (Mínimo 12)
+   #### 9.5 INSTRUÇÕES APLICANDO ATUALIZAÇÃO E EXCLUSÃO DE DADOS (Mínimo 6)
+   #### 9.6 CONSULTAS COM INNER JOIN E ORDER BY (Mínimo 6)
+   #### 9.7 CONSULTAS COM GROUP BY E FUNÇÕES DE AGRUPAMENTO (Mínimo 6)
+   #### 9.8 CONSULTAS COM LEFT, RIGHT E FULL JOIN (Mínimo 4)
+   #### 9.9 CONSULTAS COM SELF JOIN E VIEW (Mínimo 6)
+   #### 9.10 SUBCONSULTAS (Mínimo 4)
