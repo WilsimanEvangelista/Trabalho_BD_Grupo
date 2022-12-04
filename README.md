@@ -44,20 +44,12 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
  PESSOA: Tabela que armazena informações sobre as pessoas presentes no modelo. </br>
  CLIENTE: Tabela que armazena informações referentes ao cliente. </br>
  ENTREGADOR: Tabela que armazena informações referentes ao entregador. </br>
- ENTREGA: Tabela que armazena informações sobre a entrega que será realizada pelo entregador. </br>
+ ENDERECO: Tabela que armazena informações sobre os endereços necessários. </br>
+ CONTATO: Tabela que armazena informações sobre o contato das pessoas </br>
  FABRICANTE: Tabela que armazena informações referentes ao fabricante. </br>
  PRODUTO: Tabela que armazena informações referentes ao produto. </br>
  PEDIDO: Tabela que armazena informações referentes ao pedido. </br>
- ENDERECO: Tabela que armazena informações sobre os endereços necessários. </br>
- Fabricante_Telefone: Tabela que relaciona o fabricante a seu(s) telefone(s). </br>
- Fabricante_Email: Tabela que relaciona o fabricante a seu(s) email(s). </br>
- Pessoa_Telefone: Tabela que relaciona a Pessoa a seu(s) telefone(s). </br>
- Cliente_Pedido: Tabela que relaciona o cliente a seu pedido. </br>
  Pedido_Produto: Tabela que relaciona o pedido ao produto que foi inserido nele. </br>
- Fabricante_Produto: Tabela que relaciona o Fabricante ao(s) produto(s) que ele possui. </br>
- Entregador_Entrega: Tabela que relaciona o Entregador a Entrega que ele realizará. </br>
- Pedido_Endereco: Tabela que relaciona o pedido ao endereço requerido nele. </br>
- Fabricante_Endereco: Tabela que relaciona o fabricante a seu endereço. </br>
  
 ### 6. MODELO LÓGICO
 
@@ -323,17 +315,259 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
 
    #### 9.2 CONSULTAS DAS TABELAS COM FILTROS WHERE
    
+      SELECT nome, preco from PRODUTO where preco>=20
+
+      SELECT fk_produto_codigo from pedido_produto where quantidade = 2
+
+      SELECT codigo from PEDIDO where valor_total>=80
+
+      SELECT * from PEDIDO where extract(year from data) = 2020
+   
    #### 9.3 CONSULTAS QUE USAM OPERADORES LÓGICOS, ARITMÉTICOS E TABELAS OU CAMPOS RENOMEADOS
    
+    select pessoa.nome as nome_pessoa, salario
+    from PESSOA
+    inner join ENTREGADOR
+    on pessoa.codigo = ENTREGADOR.fk_pessoa_codigo
+    where salario > 1000 and salario < 2000
+    
+    select * from endereco
+    where estado = 'São Paulo' or bairro = 'Centro'
+    
+    select nome, preco, produto.fk_fabricante_fk_pessoa_codigo as cod_fabricante
+    from fabricante
+    inner join produto
+    on fabricante.fk_pessoa_codigo = produto.fk_fabricante_fk_pessoa_codigo
+    where produto.preco > 15.00 and produto.preco < 35.00
+    
+    select * from pessoa
+    where nome like('H%') or nome like('C%')
+    
+    select codigo, valor_total, data, extract(year from data) as ano
+    from pedido
+    where extract(year from data) >= 2020 and not extract(year from data) = 2022
+    
+    ---
+    
+    SELECT nome, preco, preco - (preco*0.1) as preco_menos_10_porcento, preco + (preco*0.1) as preco_mais_10_porcento 
+    from PRODUTO
+    
+    SELECT sum(valor_total)/count(valor_total) as valor_medio_dos_produtos 
+    from PEDIDO
+    
+    SELECT sum(preco)/count(codigo) as valor_medio_dos_produtos 
+    from PRODUTO
+    
+    ---
+    
+    select fk_pessoa_codigo as "Cógido da Pessoa", tipo_contato as "Tipo do contato", contato as "Descrição do contato"
+    from contato
+    
+    select fk_produto_codigo as "Código do produto", fk_pedido_codigo as "Código do pedido", quantidade as "Quantidade de produtos"
+    from pedido_produto
+    where quantidade > 2
+    
+    SELECT pessoa.nome as "Nome do entregador", salario as "Salário do entregador"
+    from pessoa
+    inner join entregador
+    on pessoa.codigo = entregador.fk_pessoa_codigo
+     
+   
    #### 9.4 CONSULTAS QUE USAM OPERADORES LIKE E DATAS
+   
+      select * from produto 
+      where nome like ('%l')
+
+      select * from produto 
+      where nome like ('_o%')
+      
+      select * from pessoa 
+      where nome like ('H%')
+      
+      select * from produto  
+      where nome like ('____cetamol')
+      
+      select * from endereco 
+      where bairro like ('C%')
+      
+      select * from endereco 
+      where tipo_logradouro ilike ('R%')
+      
+      ---
+      
+      select codigo
+      from pedido 
+      where extract(year from data) = 2021
+      
+      select codigo 
+      from pedido 
+      where date_part('year', data) = 2021
+      
+      select codigo, data, current_date - (data) as qtd_dias_pedido 
+      from pedido
+      
+      select codigo, data, age(current_date,data) as tempo 
+      from pedido
+      
+      select cpf, data_nascimento, (age(current_date,data_nascimento)) as idade_completa 
+      from cliente
+      
+      select cpf, data_nascimento, date_part('year',(age(current_date,data_nascimento))) as idade_ano 
+      from cliente
+      
+      
    #### 9.5 INSTRUÇÕES APLICANDO ATUALIZAÇÃO E EXCLUSÃO DE DADOS
-   #### 9.6 CONSULTAS COM INNER JOIN E ORDER BY 
+   
+      DELETE FROM pedido_produto 
+      where fk_PEDIDO_codigo = 30645
+      
+      DELETE FROM pedido_produto 
+      where fk_PRODUTO_codigo = 280
+      
+      DELETE FROM contato 
+      where contato = '970190276'
+      
+      ---
+      
+      UPDATE CONTATO set contato = 98315013 
+      where fk_pessoa_codigo = 17
+      
+      UPDATE CONTATO set contato = 96623266 
+      where fk_pessoa_codigo = 14
+      
+      UPDATE CONTATO set contato = 95046166 
+      where fk_pessoa_codigo = 16
+   
+   
+   #### 9.6 CONSULTAS COM INNER JOIN E ORDER BY
+   
+      select p.nome as nome_do_entregador, e.salario as salario
+      from pessoa as p
+      inner join entregador as e 
+      on (p.codigo=e.fk_pessoa_codigo)
+      order by salario desc
+      
+      select c.cpf as cpf_do_cliente, p.valor_total as valor_total_do_pedido
+      from cliente as c
+      inner join pedido as p 
+      on (c.fk_pessoa_codigo=p.fk_cliente_fk_pessoa_codigo)
+      order by valor_total desc
+      
+      select f.fk_endereco_codigo as endereco_do_fabricante, p.preco as preco_do_produto
+      from fabricante as f 
+      inner join produto as p 
+      on (f.fk_pessoa_codigo=p.fk_fabricante_fk_pessoa_codigo)
+      order by preco desc
+      
+      select p.codigo as codigo_do_pedido, pp.quantidade qtd_de_itens_no_pedido
+      from pedido as p
+      inner join pedido_produto as pp 
+      on (p.codigo = pp.fk_pedido_codigo)
+      order by pp.quantidade desc
+      
+      select f.cnpj as cnpj_do_fabricante, e.numero numero_do_endereco
+      from fabricante as f
+      inner join endereco as e 
+      on (f.fk_endereco_codigo = e.codigo)
+      order by e.numero desc
+      
+      select p.codigo as codigo_da_pessoa, c.contato as contato
+      from contato as c 
+      inner join pessoa as p 
+      on (p.codigo=c.fk_pessoa_codigo)
+      order by codigo_da_pessoa asc
+      
+
    #### 9.7 CONSULTAS COM GROUP BY E FUNÇÕES DE AGRUPAMENTO 
+   
+   
+   
    #### 9.8 CONSULTAS COM LEFT, RIGHT E FULL JOIN 
+   
+      SELECT p.codigo as codigo_do_produto, f.cnpj as cnpj_do_fabricante, f.fk_endereco_codigo as endereco_do_fabricante
+      FROM produto as p
+      RIGHT OUTER JOIN FABRICANTE as f
+      on(p.fk_fabricante_fk_pessoa_codigo = f.fk_pessoa_codigo)
+      
+      SELECT cpf as cpf_do_cliente, p.codigo as codigo_do_pedido
+      FROM CLIENTE
+      LEFT OUTER JOIN pedido as p
+      on(cliente.fk_pessoa_codigo = p.fk_cliente_fk_pessoa_codigo)
+      
+      SELECT * FROM pessoa 
+      FULL OUTER JOIN pedido 
+      on pessoa.codigo = pedido.fk_cliente_fk_pessoa_codigo
+      
+      SELECT * FROM fabricante 
+      FULL OUTER JOIN produto 
+      on fabricante.fk_pessoa_codigo=produto.fk_fabricante_fk_pessoa_codigo
+      
+   
    #### 9.9 CONSULTAS COM SELF JOIN E VIEW 
+   
+   
+   
+   ---
+   
+      drop view if exists produto_e_seu_preco
+      create view produto_e_seu_preco as
+      select nome, preco
+      from produto
+
+      drop view if exists fabricante_e_seu_cnpj
+      create view fabricante_e_seu_cnpj as
+      select fk_pessoa_codigo as codigo_do_fabricante, cnpj
+      from fabricante
+
+      drop view if exists produtos_com_10_de_desconto
+      create view produtos_com_10_de_desconto as 
+      select nome as produto, (preco-(preco/10)) as preco_com_desconto 
+      from produto
+
+      drop view if exists produto_e_Seu_codigo
+      create view produto_e_Seu_codigo as 
+      select nome, codigo
+      from produto
+
+   
    #### 9.10 SUBCONSULTAS 
    
+      select fk_pessoa_codigo, count(*)
+      from contato
+      where tipo_contato not in ('Email')
+      group by fk_pessoa_codigo
+    
+      select produto.nome as nome_produto, pedido.codigo as codigo_pedido
+      from produto
+      inner join pedido_produto 
+      ON pedido_produto.fk_produto_codigo = produto.codigo
+      inner join pedido 
+      ON pedido.codigo = pedido_produto.fk_pedido_codigo
+      where pedido.codigo in (
+         select fk_pedido_codigo 
+         from pedido_produto 
+         where quantidade > 2
+      )
+      
+      select *from fabricante where cnpj in(
+         select cnpj from fabricante where cnpj<>05161069000110
+      )
+      
+      select * from endereco where estado in(
+         select estado from endereco where estado<>'São Paulo'
+      )
+      
+      select * from endereco where tipo_logradouro in(
+         select tipo_logradouro from endereco where tipo_logradouro<>'Rua'
+      )
+      
+      select * from entregador where salario in(
+         select salario from entregador where salario>1000
+      )
+   
    ### 10 RELATÓRIOS E GRÁFICOS
+   
+   
    
    ### 11 SLIDES E VÍDEO PARA APRESENTAÇAO FINAL
    
