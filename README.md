@@ -471,3 +471,9 @@ Ao produto ser adicionado a um pedido, deve-se informar a quantidade de produtos
    #### 9.8 CONSULTAS COM LEFT, RIGHT E FULL JOIN (Mínimo 4)
    #### 9.9 CONSULTAS COM SELF JOIN E VIEW (Mínimo 6)
    #### 9.10 SUBCONSULTAS (Mínimo 4)
+   
+   ### 10 RELATÓRIOS E GRÁFICOS
+   
+   ### 11 SLIDES E VÍDEO PARA APRESENTAÇAO FINAL
+   
+   
