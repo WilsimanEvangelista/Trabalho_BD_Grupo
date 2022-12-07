@@ -567,8 +567,68 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
    
    ### 10 RELATÓRIOS E GRÁFICOS
    
+   #### Relatório 1
    
+   Objetivo: Obter relatório que mostre a quantidade de pedidos que foram entregues por cada entregador para possíveis reajustes salariais.
+   
+         select p.fk_entregador_fk_pessoa_codigo as codigo_entregador, count(c.fk_pessoa_codigo) as quantidade_de_pedidos     
+         from cliente as c     
+         inner join pedido as p on     
+         (c.fk_pessoa_codigo = p.fk_cliente_fk_pessoa_codigo)     
+         group by p.fk_entregador_fk_pessoa_codigo
+         
+   ![download](https://user-images.githubusercontent.com/116188500/206194325-14c5e18f-743b-46be-9110-fba31b25d0f6.png)
+   
+   #### Relatório 2
+   
+   Objetivo: Obter relatórios da quantidade de endereços que possuem o mesmo estado para melhorar a distribuição de lojas.
+   
+          select estado, count(*) as enderecos_desse_estado
+          from endereco
+          group by estado
+          order by estado desc
+   
+   ![image](https://user-images.githubusercontent.com/116188500/206194522-741a6671-470b-406d-a4f0-80199ea572a5.png)
+   
+   #### Relatório 3
+   
+   Objetivo: analisar a quantidade de endereços que possuem cada tipo de logradouro, afim de facilitar a logística das entregas.
+   
+         select tipo_logradouro, count(*) as quantidade_de_enderecos
+         from endereco
+         group by tipo_logradouro
+   
+   ![image](https://user-images.githubusercontent.com/116188500/206194661-960aca5e-ff53-438d-8615-566a04ae47c2.png)
+   
+   #### Relatório 4
+   
+   Objetivo: analisar o valor total nos pedidos de cada cliente.
+   
+         select pessoa.nome as nome, sum(pedido.valor_total) as valor_total_nos_pedidos
+         from pessoa
+         inner join pedido on
+         (pessoa.codigo = fk_cliente_fk_pessoa_codigo)
+         group by pessoa.nome
+   
+   ![image](https://user-images.githubusercontent.com/116188500/206194786-deb65349-9fa1-44ac-81f2-7c66adabe9b9.png)
+   
+   #### Relatório 5
+   
+   Objetivo: verificar a quantidade de contatos de cada cliente cadastrados para melhorar a comunicação com o mesmo.
+   
+         select p.codigo as codigo, count(c.contato) as quantidade_de_contatos
+         from pessoa as p
+         inner join contato as c on
+         (p.codigo = c.fk_pessoa_codigo) 
+         group by p.codigo
+   
+   ![image](https://user-images.githubusercontent.com/116188500/206194987-77b949bb-6e57-458a-a16a-121ff95e68ad.png)
    
    ### 11 SLIDES E VÍDEO PARA APRESENTAÇAO FINAL
    
+   [Slide_Trabalho_BD.pdf](https://github.com/WilsimanEvangelista/Trabalho_BD_Grupo/files/10176573/Slide_Trabalho_BD.pdf)
    
+   https://www.youtube.com/watch?v=CkhTh13a1v0
+   
+   
+# 🩺 Fim! Por enquanto...
