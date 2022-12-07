@@ -577,7 +577,7 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
          (c.fk_pessoa_codigo = p.fk_cliente_fk_pessoa_codigo)     
          group by p.fk_entregador_fk_pessoa_codigo
          
-   ![download](https://user-images.githubusercontent.com/116188500/206194325-14c5e18f-743b-46be-9110-fba31b25d0f6.png)
+         ![download](https://user-images.githubusercontent.com/116188500/206194325-14c5e18f-743b-46be-9110-fba31b25d0f6.png)
    
    #### Relatório 2
    
