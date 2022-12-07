@@ -577,7 +577,7 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
          (c.fk_pessoa_codigo = p.fk_cliente_fk_pessoa_codigo)     
          group by p.fk_entregador_fk_pessoa_codigo
          
-         ![download](https://user-images.githubusercontent.com/116188500/206194325-14c5e18f-743b-46be-9110-fba31b25d0f6.png)
+   ![image](https://user-images.githubusercontent.com/116188500/206195722-c47d6ee8-918c-41a8-9df8-3eab5dd060c3.png)
    
    #### Relatório 2
    
@@ -588,7 +588,7 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
           group by estado
           order by estado desc
    
-   ![image](https://user-images.githubusercontent.com/116188500/206194522-741a6671-470b-406d-a4f0-80199ea572a5.png)
+   ![image](https://user-images.githubusercontent.com/116188500/206195826-2b725bb5-05cf-4b61-b2da-8f74c4dc5317.png)
    
    #### Relatório 3
    
@@ -598,7 +598,7 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
          from endereco
          group by tipo_logradouro
    
-   ![image](https://user-images.githubusercontent.com/116188500/206194661-960aca5e-ff53-438d-8615-566a04ae47c2.png)
+   ![image](https://user-images.githubusercontent.com/116188500/206195889-2216c3c2-7fa5-44d7-89db-feaab5b2c63c.png)
    
    #### Relatório 4
    
@@ -610,7 +610,7 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
          (pessoa.codigo = fk_cliente_fk_pessoa_codigo)
          group by pessoa.nome
    
-   ![image](https://user-images.githubusercontent.com/116188500/206194786-deb65349-9fa1-44ac-81f2-7c66adabe9b9.png)
+   ![image](https://user-images.githubusercontent.com/116188500/206195944-4878415e-3c2d-46bb-8b36-06811b57e943.png)
    
    #### Relatório 5
    
@@ -622,7 +622,7 @@ A farmácia "WLD" conterá as informações aqui detalhadas. Da PESSOA, será re
          (p.codigo = c.fk_pessoa_codigo) 
          group by p.codigo
    
-   ![image](https://user-images.githubusercontent.com/116188500/206194987-77b949bb-6e57-458a-a16a-121ff95e68ad.png)
+   ![image](https://user-images.githubusercontent.com/116188500/206196001-3561ee31-b215-4347-8585-265b7a12243a.png)
    
    ### 11 SLIDES E VÍDEO PARA APRESENTAÇAO FINAL
    
